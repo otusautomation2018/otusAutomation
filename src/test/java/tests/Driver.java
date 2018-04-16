@@ -1,4 +1,4 @@
-package tests.lesson04;
+package tests;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -28,7 +28,6 @@ public class Driver {
     }
 
     public WebDriver getDriver(String value) {
-//        String value =  System.getProperty("webdriver");
         if (value == null) value = "chrome";
         switch (value){
             case "chrome": return createChromeDriver();
