@@ -1,6 +1,7 @@
-package tests.lesson04;
+package structures;
 
 public class BankCard {
+
     public String typeOfCard;
     public String cardNumber;
     public String nameOnCard;

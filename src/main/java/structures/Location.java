@@ -1,4 +1,4 @@
-package tests.lesson04;
+package structures;
 
 public class Location {
 

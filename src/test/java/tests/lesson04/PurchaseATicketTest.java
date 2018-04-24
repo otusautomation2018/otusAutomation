@@ -5,6 +5,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
+import structures.BankCard;
+import structures.Flight;
+import structures.Location;
+import structures.Person;
 import tests.BaseTest;
 import utils.helpers.DataHelpers;
 
@@ -17,6 +21,7 @@ public class PurchaseATicketTest extends BaseTest {
 
     @Test
     public void test() {
+
         Person user = new Person();
         user.firstName = DataHelpers.getRandomArrayItem(DataHelpers.getFirstnames());
         user.lastName = DataHelpers.getRandomArrayItem(DataHelpers.getLastnames());
@@ -56,7 +61,6 @@ public class PurchaseATicketTest extends BaseTest {
         WebElement flightElement = flights.get(DataHelpers.random(0, flights.size() - 1));
 
 //        создаем объект, который будет хранить информацию о выбранном перелете
-//        отрефачить метод newFlight
         fillInTheFlightInformation(flightElement, flight);
         flightElement.findElement(By.cssSelector("td input[type=submit]")).click();
         purchasePageIsDisplayed(textOnHeadingOnPurchasePage);

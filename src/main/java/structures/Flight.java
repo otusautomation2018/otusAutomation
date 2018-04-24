@@ -1,10 +1,11 @@
-package tests.lesson04;
+package structures;
 
 import utils.helpers.DataHelpers;
 
 public class Flight {
-    public String number;
+
     public float price;
+    public String number;
     public String airline;
     public String departureCity;
     public String destinationCity;

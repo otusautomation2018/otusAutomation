@@ -5,15 +5,18 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import utils.Driver;
+import utils.PropertyReader;
 
 import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
 
+    public String baseUrl = PropertyReader.
+            getPropertyFromFile("properties/settings.properties", "baseUrl");
+    public int baseTimeout = Integer.parseInt(PropertyReader.
+            getPropertyFromFile("properties/settings.properties", "timeout"));
     protected WebDriver driver;
     protected WebDriverWait webDriverWait;
-    public String baseUrl = "http://blazedemo.com";
-    int baseTimeout = 5;
 
     @BeforeClass
     public void beforeClass(){
