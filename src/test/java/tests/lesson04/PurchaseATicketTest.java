@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class PurchareATicketTest extends BaseTest {
+public class PurchaseATicketTest extends BaseTest {
 
     @Test
     public void test() {
