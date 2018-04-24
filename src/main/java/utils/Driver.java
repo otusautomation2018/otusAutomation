@@ -1,5 +1,6 @@
 package utils;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -11,23 +12,22 @@ public class Driver {
     public static String driverName;
 
     public WebDriver createFireFoxDriver() {
-        WebDriver driver = new FirefoxDriver();
-        return driver;
+        WebDriverManager.firefoxdriver().setup();
+        return new FirefoxDriver();
     }
 
     public WebDriver createOperaDriver() {
-        OperaDriver driver = new OperaDriver();
-        return driver;
+        WebDriverManager.operadriver().setup();
+        return new OperaDriver();
     }
 
     public WebDriver createChromeDriver() {
-        WebDriver driver = new ChromeDriver();
-        return driver;
+        WebDriverManager.chromedriver().setup();
+        return new ChromeDriver();
     }
 
     public WebDriver createSafariDriver() {
-        WebDriver driver = new SafariDriver();
-        return driver;
+        return new SafariDriver();
     }
 
     public WebDriver getDriver() {
