@@ -6,9 +6,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
 import tests.BaseTest;
-import tests.helpers.DataGenetaror;
+import utils.helpers.DataHelpers;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -17,25 +17,47 @@ public class PurchaseATicketTest extends BaseTest {
 
     @Test
     public void test() {
-        String valueDepartureCity = "Boston";
-        String valueDestinationCity = "Berlin";
-        String textOnHeadingOnReservePage = "Flights from " + valueDepartureCity + " to " + valueDestinationCity + ":";
-        String textOnHeadingOnPurchasePage = "Your flight from " + valueDepartureCity + " to " + valueDestinationCity + " has been reserved.";
+        Person user = new Person();
+        user.firstName = DataHelpers.getRandomArrayItem(DataHelpers.getFirstnames());
+        user.lastName = DataHelpers.getRandomArrayItem(DataHelpers.getLastnames());
+
+        Location address = new Location();
+        address.city = DataHelpers.getRandomArrayItem(DataHelpers.getCities());
+        address.street = DataHelpers.getRandomArrayItem(DataHelpers.getStreets());
+        address.state = DataHelpers.getRandomArrayItem(DataHelpers.getStates());
+        address.zipCode = DataHelpers.generateZipCode();
+
+        GregorianCalendar cal = new GregorianCalendar();
+        int yearMin = cal.get(Calendar.YEAR);
+        int yearMax = yearMin + 5;
+
+        BankCard bankCard = new BankCard();
+        bankCard.typeOfCard = DataHelpers.getRandomArrayItem(DataHelpers.getTypesOfCards());
+        bankCard.cardNumber = DataHelpers.generateCardNumber();
+        bankCard.month = String.valueOf(DataHelpers.random(1, 12));
+        bankCard.year = String.valueOf(DataHelpers.random(yearMin, yearMax));
+        bankCard.nameOnCard = user.fullName();
+
+        Flight flight = new Flight();
+
+        String textOnHeadingOnReservePage = "Flights from " + flight.departureCity() + " to " + flight.destinationCity() + ":";
+        String textOnHeadingOnPurchasePage = "Your flight from " + flight.departureCity() + " to " + flight.destinationCity() + " has been reserved.";
         String textOnHeadingOnConfirmationPage = "Thank you for your purchase today!";
 
         driver.get(baseUrl);
 
-        fillAndSubmitChoiseCitiesForm(valueDepartureCity, valueDestinationCity);
+        fillAndSubmitChoiseCitiesForm(flight.departureCity(), flight.destinationCity());
         reservePageIsDispalyed(textOnHeadingOnReservePage);
 
 //        Reserve Page
 //        находим все предложения перелетов
         ArrayList<WebElement> flights = new ArrayList<>(driver.findElements(By.cssSelector("table.table tbody tr")));
 //       случайно выбираем перелет
-        WebElement flightElement = flights.get(DataGenetaror.random(0, flights.size() - 1));
+        WebElement flightElement = flights.get(DataHelpers.random(0, flights.size() - 1));
 
 //        создаем объект, который будет хранить информацию о выбранном перелете
-        Flight flight = newFlight(flightElement);
+//        отрефачить метод newFlight
+        fillInTheFlightInformation(flightElement, flight);
         flightElement.findElement(By.cssSelector("td input[type=submit]")).click();
         purchasePageIsDisplayed(textOnHeadingOnPurchasePage);
 
@@ -71,25 +93,8 @@ public class PurchaseATicketTest extends BaseTest {
 //        цена на странице Purchare равна той, что мы выбрали на странице Reserve
         assertEquals(priceCostValue, flight.price);
 //        отображаемая итоговая цена является суммой цены и сборов
-        assertEquals(totalCostResult, totalCostValue);
+        assertEquals(totalCostValue, totalCostResult);
 
-
-        Person user = new Person();
-        user.firstName = "John";
-        user.lastName = "Doe";
-
-        Location address = new Location();
-        address.city = "New York";
-        address.street = "Henry Street (Manhattan)";
-        address.state = "NY";
-        address.zipCode = "123098";
-
-        BankCard bankCard = new BankCard();
-        bankCard.typeOfCard = "amex";
-        bankCard.cardNumber = "5555 5555 5555 4444";
-        bankCard.month = "9";
-        bankCard.year = "2020";
-        bankCard.nameOnCard = user.fullName();
 
         fillAndSubmitUserDataForm(user, address, bankCard);
         confirmationPageIsDisplayed(textOnHeadingOnConfirmationPage);
@@ -169,15 +174,13 @@ public class PurchaseATicketTest extends BaseTest {
         assertEquals(expectedUrl, driver.getCurrentUrl());
     }
 
-    public Flight newFlight(WebElement flightElement) {
-        Flight flight = new Flight();
+    public void fillInTheFlightInformation(WebElement flightElement, Flight flight) {
         flight.setNumber(flightElement.findElement(By.cssSelector("input[name=flight]")).getAttribute("value"));
         flight.setPrice(Float.parseFloat(flightElement.
                 findElement(
                         By.cssSelector("input[name=price]")).
                 getAttribute("value")));
         flight.setAirline(flightElement.findElement(By.cssSelector("input[name=airline]")).getAttribute("value"));
-        return flight;
     }
 
     public void fillAndSubmitUserDataForm(Person user, Location address, BankCard bankCard) {
