@@ -1,4 +1,4 @@
-package tests;
+package utils;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -7,6 +7,9 @@ import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 public class Driver {
+
+    public static String driverName;
+
     public WebDriver createFireFoxDriver() {
         WebDriver driver = new FirefoxDriver();
         return driver;
@@ -27,9 +30,10 @@ public class Driver {
         return driver;
     }
 
-    public WebDriver getDriver(String value) {
-        if (value == null) value = "chrome";
-        switch (value){
+    public WebDriver getDriver() {
+        driverName = PropertyReader.getPropertyFromFile("properties/settings.properties", "webDriver");
+        if (driverName == null) driverName = "chrome";
+        switch (driverName){
             case "chrome": return createChromeDriver();
             case "firefox": return createFireFoxDriver();
             case "opera": return createOperaDriver();
