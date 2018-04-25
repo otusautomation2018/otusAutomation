@@ -23,23 +23,8 @@ public class PurchaseATicketTest extends BaseTest {
     public void test() {
 
         Person user = new Person.PersonBuilder().createPerson();
-
         Location address = new Location.LocationBuilder().createLocation();
-//        address.city = DataHelpers.getRandomArrayItem(DataHelpers.getCities());
-//        address.street = DataHelpers.getRandomArrayItem(DataHelpers.getStreets());
-//        address.state = DataHelpers.getRandomArrayItem(DataHelpers.getStates());
-//        address.zipCode = DataHelpers.generateZipCode();
-
-        GregorianCalendar cal = new GregorianCalendar();
-        int yearMin = cal.get(Calendar.YEAR);
-        int yearMax = yearMin + 5;
-
-        BankCard bankCard = new BankCard();
-        bankCard.typeOfCard = DataHelpers.getRandomArrayItem(DataHelpers.getTypesOfCards());
-        bankCard.cardNumber = DataHelpers.generateCardNumber();
-        bankCard.month = String.valueOf(DataHelpers.random(1, 12));
-        bankCard.year = String.valueOf(DataHelpers.random(yearMin, yearMax));
-        bankCard.nameOnCard = user.fullName();
+        BankCard bankCard = new BankCard.BankCardBuilder(user.fullName()).createBankCard();
 
         Flight flight = new Flight();
 
@@ -124,10 +109,10 @@ public class PurchaseATicketTest extends BaseTest {
 
 //        проверяем соответствие последних 4 знаков
         assertEquals(tdOrderCardNumber.getText().substring(tdOrderCardNumber.getText().length()-4),
-                bankCard.cardNumber.substring(bankCard.cardNumber.length()-4));
+                bankCard.getCardNumber().substring(bankCard.getCardNumber().length()-4));
 
         assertTrue(tdOrderExpiration.isDisplayed());
-        assertEquals(tdOrderExpiration.getText(), bankCard.month + " /" + bankCard.year);
+        assertEquals(tdOrderExpiration.getText(), bankCard.getMonth() + " /" + bankCard.getYear());
 
         assertTrue(tdOrderAuthCode.isDisplayed());
     }
@@ -208,23 +193,23 @@ public class PurchaseATicketTest extends BaseTest {
 
         WebElement selectElementCardType = driver.findElement(By.id("cardType"));
         Select selectCardType = new Select(selectElementCardType);
-        selectCardType.selectByValue(bankCard.typeOfCard);
+        selectCardType.selectByValue(bankCard.getTypeOfCard());
 
         WebElement iCreditCardNumber = driver.findElement(By.id("creditCardNumber"));
         iCreditCardNumber.clear();
-        iCreditCardNumber.sendKeys(bankCard.cardNumber);
+        iCreditCardNumber.sendKeys(bankCard.getCardNumber());
 
         WebElement iCreditCardMonth = driver.findElement(By.id("creditCardMonth"));
         iCreditCardMonth.clear();
-        iCreditCardMonth.sendKeys(bankCard.month);
+        iCreditCardMonth.sendKeys(bankCard.getMonth());
 
         WebElement iCreditCardYear = driver.findElement(By.id("creditCardYear"));
         iCreditCardYear.clear();
-        iCreditCardYear.sendKeys(bankCard.year);
+        iCreditCardYear.sendKeys(bankCard.getYear());
 
         WebElement iNameOnBankCard = driver.findElement(By.id("nameOnCard"));
         iNameOnBankCard.clear();
-        iNameOnBankCard.sendKeys(bankCard.nameOnCard);
+        iNameOnBankCard.sendKeys(bankCard.getNameOnCard());
 
         driver.findElement(By.cssSelector("input[type=submit]")).click();
     }
