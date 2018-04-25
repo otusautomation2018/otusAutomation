@@ -24,11 +24,11 @@ public class PurchaseATicketTest extends BaseTest {
 
         Person user = new Person.PersonBuilder().createPerson();
 
-        Location address = new Location();
-        address.city = DataHelpers.getRandomArrayItem(DataHelpers.getCities());
-        address.street = DataHelpers.getRandomArrayItem(DataHelpers.getStreets());
-        address.state = DataHelpers.getRandomArrayItem(DataHelpers.getStates());
-        address.zipCode = DataHelpers.generateZipCode();
+        Location address = new Location.LocationBuilder().createLocation();
+//        address.city = DataHelpers.getRandomArrayItem(DataHelpers.getCities());
+//        address.street = DataHelpers.getRandomArrayItem(DataHelpers.getStreets());
+//        address.state = DataHelpers.getRandomArrayItem(DataHelpers.getStates());
+//        address.zipCode = DataHelpers.generateZipCode();
 
         GregorianCalendar cal = new GregorianCalendar();
         int yearMin = cal.get(Calendar.YEAR);
@@ -192,19 +192,19 @@ public class PurchaseATicketTest extends BaseTest {
 
         WebElement iAddress = driver.findElement(By.id("address"));
         iAddress.clear();
-        iAddress.sendKeys(address.street);
+        iAddress.sendKeys(address.getStreet());
 
         WebElement iCity = driver.findElement(By.id("city"));
         iCity.clear();
-        iCity.sendKeys(address.city);
+        iCity.sendKeys(address.getCity());
 
         WebElement iState = driver.findElement(By.id("state"));
         iState.clear();
-        iState.sendKeys(address.state);
+        iState.sendKeys(address.getState());
 
         WebElement iZipCode = driver.findElement(By.id("zipCode"));
         iZipCode.clear();
-        iZipCode.sendKeys(address.zipCode);
+        iZipCode.sendKeys(address.getZipCode());
 
         WebElement selectElementCardType = driver.findElement(By.id("cardType"));
         Select selectCardType = new Select(selectElementCardType);
