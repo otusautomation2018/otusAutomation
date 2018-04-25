@@ -22,9 +22,7 @@ public class PurchaseATicketTest extends BaseTest {
     @Test
     public void test() {
 
-        Person user = new Person();
-        user.firstName = DataHelpers.getRandomArrayItem(DataHelpers.getFirstnames());
-        user.lastName = DataHelpers.getRandomArrayItem(DataHelpers.getLastnames());
+        Person user = new Person.PersonBuilder().createPerson();
 
         Location address = new Location();
         address.city = DataHelpers.getRandomArrayItem(DataHelpers.getCities());
