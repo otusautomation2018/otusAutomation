@@ -20,7 +20,7 @@ public class BaseTest {
 
     @BeforeClass
     public void beforeClass(){
-        driver = new Driver().getDriver();
+        driver = Driver.getInstance();
         driver.manage().timeouts().implicitlyWait(baseTimeout, TimeUnit.SECONDS);
         webDriverWait = new WebDriverWait(driver, baseTimeout);
     }
