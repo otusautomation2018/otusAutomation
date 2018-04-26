@@ -98,9 +98,4 @@ public class PurchaseATicketTest extends BaseTest {
 
         assertTrue(confirmationPage.orderAuthCode.isDisplayed());
     }
-
-//    public void waitForLoadPageByTextOnPage(WebElement expectedElement, String expectedText){
-//        webDriverWait.until(
-//                ExpectedConditions.textToBePresentInElement(expectedElement, expectedText));
-//    }
 }

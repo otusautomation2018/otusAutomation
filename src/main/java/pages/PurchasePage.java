@@ -111,4 +111,8 @@ public class PurchasePage extends BasePage {
         return new ConfirmationPage();
     }
 
+    public String expectedTextOnTitle(String departureCity, String destinationCity) {
+        return "Your flight from " + departureCity + " to " + destinationCity + " has been reserved.";
+    }
+
 }

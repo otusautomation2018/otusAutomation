@@ -7,8 +7,8 @@ public class Flight {
     public float price;
     public String number;
     public String airline;
-    public String departureCity;
-    public String destinationCity;
+    private String departureCity;
+    private String destinationCity;
 
     public String departureCity() {
         String[] departureCities = {

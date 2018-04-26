@@ -40,4 +40,8 @@ public class ReservePage extends BasePage {
         this.choiseFlight.click();
         return new PurchasePage();
     }
+
+    public String expectedTextOnTitle(String departureCity, String destinationCity) {
+        return "Flights from " + departureCity + " to " + destinationCity + ":";
+    }
 }

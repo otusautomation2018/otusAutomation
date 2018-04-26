@@ -33,4 +33,8 @@ public class ConfirmationPage extends BasePage {
     public String getUrl() {
         return url;
     }
+
+    public String expectedTextOnTitle() {
+        return "Thank you for your purchase today!";
+    }
 }
