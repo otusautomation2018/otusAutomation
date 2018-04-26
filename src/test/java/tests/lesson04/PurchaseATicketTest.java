@@ -79,7 +79,7 @@ public class PurchaseATicketTest extends BaseTest {
 
         waitForLoadPageByTextOnPage(confirmationPage.title, textOnHeadingOnConfirmationPage);
         String expectedUrl = baseUrl + confirmationPage.getUrl();
-        assertEquals(expectedUrl, driver.getCurrentUrl());
+        assertEquals(driver.getCurrentUrl(), expectedUrl);
         assertTrue(confirmationPage.isInitialized());
 
         assertTrue(confirmationPage.orderId.isDisplayed());
