@@ -5,6 +5,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
+import pages.MainPage;
+import pages.PurchasePage;
+import pages.ReservePage;
 import structures.BankCard;
 import structures.Flight;
 import structures.Location;
@@ -34,19 +37,42 @@ public class PurchaseATicketTest extends BaseTest {
 
         driver.get(baseUrl);
 
-        fillAndSubmitChoiseCitiesForm(flight.departureCity(), flight.destinationCity());
-        reservePageIsDispalyed(textOnHeadingOnReservePage);
+        MainPage homePage = new MainPage();
+        assertTrue(homePage.isInitialized());
+
+        homePage.fillChoiseCitiesForm(flight.departureCity(), flight.destinationCity());
+
+        ReservePage reservePage = homePage.submitForm();
+        waitForLoadPageByTextOnPage(reservePage.title, textOnHeadingOnReservePage);
+        assertTrue(reservePage.isInitialized());
+
+        reservePage.fillInTheFlightInformation(flight);
+        PurchasePage purchasePage = reservePage.choiseFlight();
+        waitForLoadPageByTextOnPage(purchasePage.title, textOnHeadingOnPurchasePage);
+        assertTrue(purchasePage.isInitialized());
+
+//        System.out.println("================================");
+//        System.out.println("================================");
+//        System.out.println("++++++++++++++++++++++++++++++++");
+//        System.out.println(flight.number);
+//        System.out.println(flight.airline);
+//        System.out.println(flight.price);
+//        System.out.println("++++++++++++++++++++++++++++++++");
+//        System.out.println("================================");
+//        System.out.println("================================");
+
+//        fillAndSubmitChoiseCitiesForm(flight.departureCity(), flight.destinationCity());
+//        reservePageIsDispalyed(textOnHeadingOnReservePage);
 
 //        Reserve Page
 //        находим все предложения перелетов
-        ArrayList<WebElement> flights = new ArrayList<>(driver.findElements(By.cssSelector("table.table tbody tr")));
+//        ArrayList<WebElement> flightsList = new ArrayList<>(driver.findElements(By.cssSelector("table.table tbody tr")));
 //       случайно выбираем перелет
-        WebElement flightElement = flights.get(DataHelpers.random(0, flights.size() - 1));
+//        WebElement flightElement = flightsList.get(DataHelpers.random(0, flightsList.size() - 1));
 
-//        создаем объект, который будет хранить информацию о выбранном перелете
-        fillInTheFlightInformation(flightElement, flight);
-        flightElement.findElement(By.cssSelector("td input[type=submit]")).click();
-        purchasePageIsDisplayed(textOnHeadingOnPurchasePage);
+//        fillInTheFlightInformation(flightElement, flight);
+//        flightElement.findElement(By.cssSelector("td input[type=submit]")).click();
+//        purchasePageIsDisplayed(textOnHeadingOnPurchasePage);
 
 
 ////        Purchase Page
@@ -117,39 +143,39 @@ public class PurchaseATicketTest extends BaseTest {
         assertTrue(tdOrderAuthCode.isDisplayed());
     }
 
-    public void selectDepartureCity(String value) {
-        WebElement selectElementDepartureCity = driver.findElement(By.cssSelector("[name='fromPort']"));
-        Select selectDepartureCity = new Select(selectElementDepartureCity);
-        selectDepartureCity.selectByValue(value);
-    }
+//    public void selectDepartureCity(String value) {
+//        WebElement selectElementDepartureCity = driver.findElement(By.cssSelector("[name='fromPort']"));
+//        Select selectDepartureCity = new Select(selectElementDepartureCity);
+//        selectDepartureCity.selectByValue(value);
+//    }
+//
+//    public void selectDestinationCity(String value) {
+//        WebElement selectElementDestinationCity = driver.findElement(By.cssSelector("[name='toPort']"));
+//        Select selectDestinationCity = new Select(selectElementDestinationCity);
+//        selectDestinationCity.selectByValue(value);
+//    }
 
-    public void selectDestinationCity(String value) {
-        WebElement selectElementDestinationCity = driver.findElement(By.cssSelector("[name='toPort']"));
-        Select selectDestinationCity = new Select(selectElementDestinationCity);
-        selectDestinationCity.selectByValue(value);
-    }
-
-    public void fillAndSubmitChoiseCitiesForm(String valueDepartureCity, String valueDestinationCity){
-        selectDepartureCity(valueDepartureCity);
-        selectDestinationCity(valueDestinationCity);
-        driver.findElement(By.cssSelector("[type='submit']")).click();
-    }
+//    public void fillAndSubmitChoiseCitiesForm(String valueDepartureCity, String valueDestinationCity){
+//        selectDepartureCity(valueDepartureCity);
+//        selectDestinationCity(valueDestinationCity);
+//        driver.findElement(By.cssSelector("[type='submit']")).click();
+//    }
 
     public void waitForLoadPageByTextOnPage(WebElement expectedElement, String expectedText){
         webDriverWait.until(
                 ExpectedConditions.textToBePresentInElement(expectedElement, expectedText));
     }
     
-    public void reservePageIsDispalyed(String expectedText){
-        WebElement titleReservePage = driver.findElement(By.tagName("h3"));
-        waitForLoadPageByTextOnPage(titleReservePage, expectedText);
-        assertTrue(titleReservePage.isDisplayed());
-    }
-    public void purchasePageIsDisplayed(String expectedText) {
-        WebElement titlePurchasePage = driver.findElement(By.tagName("h2"));
-        waitForLoadPageByTextOnPage(titlePurchasePage, expectedText);
-        assertTrue(titlePurchasePage.isDisplayed());
-    }
+//    public void reservePageIsDispalyed(String expectedText){
+//        WebElement titleReservePage = driver.findElement(By.tagName("h3"));
+//        waitForLoadPageByTextOnPage(titleReservePage, expectedText);
+//        assertTrue(titleReservePage.isDisplayed());
+//    }
+//    public void purchasePageIsDisplayed(String expectedText) {
+//        WebElement titlePurchasePage = driver.findElement(By.tagName("h2"));
+//        waitForLoadPageByTextOnPage(titlePurchasePage, expectedText);
+//        assertTrue(titlePurchasePage.isDisplayed());
+//    }
 
     public void confirmationPageIsDisplayed(String expectedText) {
         String expectedUrl = baseUrl + "/confirmation.php";
@@ -161,14 +187,14 @@ public class PurchaseATicketTest extends BaseTest {
         assertEquals(expectedUrl, driver.getCurrentUrl());
     }
 
-    public void fillInTheFlightInformation(WebElement flightElement, Flight flight) {
-        flight.setNumber(flightElement.findElement(By.cssSelector("input[name=flight]")).getAttribute("value"));
-        flight.setPrice(Float.parseFloat(flightElement.
-                findElement(
-                        By.cssSelector("input[name=price]")).
-                getAttribute("value")));
-        flight.setAirline(flightElement.findElement(By.cssSelector("input[name=airline]")).getAttribute("value"));
-    }
+//    public void fillInTheFlightInformation(WebElement flightElement, Flight flight) {
+//        flight.setNumber(flightElement.findElement(By.cssSelector("input[name=flight]")).getAttribute("value"));
+//        flight.setPrice(Float.parseFloat(flightElement.
+//                findElement(
+//                        By.cssSelector("input[name=price]")).
+//                getAttribute("value")));
+//        flight.setAirline(flightElement.findElement(By.cssSelector("input[name=airline]")).getAttribute("value"));
+//    }
 
     public void fillAndSubmitUserDataForm(Person user, Location address, BankCard bankCard) {
         WebElement iName = driver.findElement(By.id("inputName"));
