@@ -1,8 +1,5 @@
 package tests.lesson04;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Test;
 import pages.ConfirmationPage;
 import pages.MainPage;
@@ -13,6 +10,7 @@ import structures.Flight;
 import structures.Location;
 import structures.Person;
 import tests.BaseTest;
+import utils.helpers.WaitingsHelpers;
 
 
 import static org.testng.Assert.assertEquals;
@@ -29,17 +27,6 @@ public class PurchaseATicketTest extends BaseTest {
 
         Flight flight = new Flight();
 
-        String textOnHeadingOnReservePage = "Flights from " +
-                flight.departureCity() +
-                " to " +
-                flight.destinationCity() + ":";
-        String textOnHeadingOnPurchasePage = "Your flight from " +
-                flight.departureCity() +
-                " to " +
-                flight.destinationCity() +
-                " has been reserved.";
-        String textOnHeadingOnConfirmationPage = "Thank you for your purchase today!";
-
         driver.get(baseUrl);
 
         MainPage homePage = new MainPage();
@@ -48,12 +35,18 @@ public class PurchaseATicketTest extends BaseTest {
         homePage.fillChoiseCitiesForm(flight.departureCity(), flight.destinationCity());
 
         ReservePage reservePage = homePage.submitForm();
-        waitForLoadPageByTextOnPage(reservePage.title, textOnHeadingOnReservePage);
+        String textOnHeadingOnReservePage = reservePage.expectedTextOnTitle(
+                flight.departureCity(),
+                flight.destinationCity());
+        WaitingsHelpers.waitForLoadPageByTextOnPage(reservePage.title, textOnHeadingOnReservePage);
         assertTrue(reservePage.isInitialized());
 
         reservePage.fillInTheFlightInformation(flight);
         PurchasePage purchasePage = reservePage.choiseFlight();
-        waitForLoadPageByTextOnPage(purchasePage.title, textOnHeadingOnPurchasePage);
+        String textOnHeadingOnPurchasePage = purchasePage.expectedTextOnTitle(
+                flight.departureCity(),
+                flight.destinationCity());
+        WaitingsHelpers.waitForLoadPageByTextOnPage(purchasePage.title, textOnHeadingOnPurchasePage);
         assertTrue(purchasePage.isInitialized());
 
         assertEquals(purchasePage.flightNumber.getText(), "Flight Number: " + flight.getNumber());
@@ -77,7 +70,7 @@ public class PurchaseATicketTest extends BaseTest {
         purchasePage.fillPayForm(user, address, bankCard);
         ConfirmationPage confirmationPage = purchasePage.submitForm();
 
-        waitForLoadPageByTextOnPage(confirmationPage.title, textOnHeadingOnConfirmationPage);
+        WaitingsHelpers.waitForLoadPageByTextOnPage(confirmationPage.title, confirmationPage.expectedTextOnTitle());
         String expectedUrl = baseUrl + confirmationPage.getUrl();
         assertEquals(driver.getCurrentUrl(), expectedUrl);
         assertTrue(confirmationPage.isInitialized());
@@ -96,9 +89,9 @@ public class PurchaseATicketTest extends BaseTest {
                                 orderCardNumber.
                                 getText().
                                 length()-4),
-                        bankCard.
-                                getCardNumber().
-                                substring(bankCard.getCardNumber().length()-4));
+                     bankCard.
+                             getCardNumber().
+                             substring(bankCard.getCardNumber().length()-4));
 
         assertTrue(confirmationPage.orderExpiration.isDisplayed());
         assertEquals(confirmationPage.orderExpiration.getText(), bankCard.getMonth() + " /" + bankCard.getYear());
@@ -106,8 +99,8 @@ public class PurchaseATicketTest extends BaseTest {
         assertTrue(confirmationPage.orderAuthCode.isDisplayed());
     }
 
-    public void waitForLoadPageByTextOnPage(WebElement expectedElement, String expectedText){
-        webDriverWait.until(
-                ExpectedConditions.textToBePresentInElement(expectedElement, expectedText));
-    }
+//    public void waitForLoadPageByTextOnPage(WebElement expectedElement, String expectedText){
+//        webDriverWait.until(
+//                ExpectedConditions.textToBePresentInElement(expectedElement, expectedText));
+//    }
 }
