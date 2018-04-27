@@ -8,6 +8,12 @@
     <artifactId>otusAutomation</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <browser></browser>
+        <suite></suite>
+    </properties>
+
+
     <dependencies>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -39,11 +45,18 @@
                 <version>2.21.0</version>
                 <configuration>
                     <systemPropertyVariables>
+                        <browser>${browser}</browser>
                         <webdriver.chrome.driver>/Library/Webdriver/chrome/chromedriver</webdriver.chrome.driver>
                         <webdriver.gecko.driver>/Library/Webdriver/gecko/geckodriver</webdriver.gecko.driver>
                         <webdriver.opera.driver>/Library/Webdriver/opera/operadriver</webdriver.opera.driver>
                         <webdriver.safari.driver>/usr/bin/safaridriver</webdriver.safari.driver>
+
+                        <suite>${suite}</suite>
                     </systemPropertyVariables>
+
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${project.basedir}/src/test/resources/${suite}.xml</suiteXmlFile>
+                    </suiteXmlFiles>
                 </configuration>
             </plugin>
             <plugin>
