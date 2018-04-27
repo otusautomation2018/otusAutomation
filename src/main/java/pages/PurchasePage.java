@@ -61,7 +61,13 @@ public class PurchasePage extends BasePage {
     @FindBy(css = "input[type=submit]")
     public WebElement submitFormButton;
 
+    private String url = "/purchase.php";
+
     public PurchasePage() { super(); }
+
+    public String getUrl() {
+        return url;
+    }
 
     public boolean isInitialized() { return title.isDisplayed(); }
 

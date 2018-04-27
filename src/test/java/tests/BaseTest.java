@@ -12,8 +12,6 @@ import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
 
-    public String baseUrl = PropertyReader.
-            getPropertyFromFile("properties/settings.properties", "baseUrl");
     public int baseTimeout = Integer.parseInt(PropertyReader.
             getPropertyFromFile("properties/settings.properties", "timeout"));
 

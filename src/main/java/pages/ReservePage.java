@@ -25,10 +25,15 @@ public class ReservePage extends BasePage {
 
     private WebElement choiseFlight = flightElement.findElement(By.cssSelector("td input[type=submit]"));
 
+    private String url = "/reserve.php";
+
     public ReservePage() { super(); }
 
     public boolean isInitialized() { return title.isDisplayed(); }
 
+    public String getUrl() {
+        return url;
+    }
 
     public void fillInTheFlightInformation(Flight flight) {
         flight.setNumber(flightNumber.getAttribute("value"));

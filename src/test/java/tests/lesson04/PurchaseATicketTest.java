@@ -10,6 +10,7 @@ import structures.Flight;
 import structures.Location;
 import structures.Person;
 import tests.BaseTest;
+import utils.PropertyReader;
 import utils.helpers.WaitingsHelpers;
 
 
@@ -18,13 +19,15 @@ import static org.testng.Assert.assertTrue;
 
 public class PurchaseATicketTest extends BaseTest {
 
+    private String baseUrl = PropertyReader.
+            getPropertyFromFile("properties/settings.properties", "baseUrlBlaseDemo");
+
     @Test
     public void test() {
 
         Person user = new Person.PersonBuilder().createPerson();
         Location address = new Location.LocationBuilder().createLocation();
         BankCard bankCard = new BankCard.BankCardBuilder(user.fullName()).createBankCard();
-
         Flight flight = new Flight();
 
         driver.get(baseUrl);
@@ -35,18 +38,23 @@ public class PurchaseATicketTest extends BaseTest {
         homePage.fillChoiseCitiesForm(flight.departureCity(), flight.destinationCity());
 
         ReservePage reservePage = homePage.submitForm();
+
         String textOnHeadingOnReservePage = reservePage.expectedTextOnTitle(
                 flight.departureCity(),
                 flight.destinationCity());
         WaitingsHelpers.waitForLoadPageByTextOnPage(reservePage.title, textOnHeadingOnReservePage);
+        assertEquals(driver.getCurrentUrl(), baseUrl + reservePage.getUrl());
         assertTrue(reservePage.isInitialized());
 
         reservePage.fillInTheFlightInformation(flight);
+
         PurchasePage purchasePage = reservePage.choiseFlight();
+
         String textOnHeadingOnPurchasePage = purchasePage.expectedTextOnTitle(
                 flight.departureCity(),
                 flight.destinationCity());
         WaitingsHelpers.waitForLoadPageByTextOnPage(purchasePage.title, textOnHeadingOnPurchasePage);
+        assertEquals(driver.getCurrentUrl(), baseUrl + purchasePage.getUrl());
         assertTrue(purchasePage.isInitialized());
 
         assertEquals(purchasePage.flightNumber.getText(), "Flight Number: " + flight.getNumber());
