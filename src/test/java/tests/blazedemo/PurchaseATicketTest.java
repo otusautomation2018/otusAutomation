@@ -70,7 +70,7 @@ public class PurchaseATicketTest extends BaseTest {
         float totalCostValue = Float.parseFloat(purchasePage.totalCost.getText().
                         replace("Total Cost: ",""));
 
-//        цена на странице Purchare равна той, что мы выбрали на странице Reserve
+//        цена на странице Purchase равна той, что мы выбрали на странице Reserve
         assertEquals(priceCostValue, flight.getPrice());
 //        отображаемая итоговая цена является суммой цены и сборов
         assertEquals(totalCostValue, totalCostResult);
