@@ -3,7 +3,7 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import structures.Flight;
+import entities.Flight;
 import utils.Driver;
 import utils.helpers.DataHelpers;
 

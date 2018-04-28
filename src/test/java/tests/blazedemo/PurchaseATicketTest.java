@@ -5,10 +5,10 @@ import pages.ConfirmationPage;
 import pages.MainPage;
 import pages.PurchasePage;
 import pages.ReservePage;
-import structures.BankCard;
-import structures.Flight;
-import structures.Location;
-import structures.Person;
+import entities.BankCard;
+import entities.Flight;
+import entities.Location;
+import entities.Person;
 import tests.BaseTest;
 import utils.PropertyReader;
 import utils.helpers.WaitingsHelpers;
@@ -71,7 +71,7 @@ public class PurchaseATicketTest extends BaseTest {
                         replace("Total Cost: ",""));
 
 //        цена на странице Purchare равна той, что мы выбрали на странице Reserve
-        assertEquals(priceCostValue, flight.price);
+        assertEquals(priceCostValue, flight.getPrice());
 //        отображаемая итоговая цена является суммой цены и сборов
         assertEquals(totalCostValue, totalCostResult);
 

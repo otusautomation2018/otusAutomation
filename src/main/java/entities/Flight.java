@@ -1,12 +1,14 @@
-package structures;
+package entities;
 
+import lombok.Data;
 import utils.helpers.DataHelpers;
 
+@Data
 public class Flight {
 
-    public float price;
-    public String number;
-    public String airline;
+    private float price;
+    private String number;
+    private String airline;
     private String departureCity;
     private String destinationCity;
 
@@ -28,27 +30,27 @@ public class Flight {
         return this.destinationCity;
     }
 
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public String getAirline() {
-        return airline;
-    }
-
-    public void setAirline(String airline) {
-        this.airline = airline;
-    }
+//    public String getNumber() {
+//        return number;
+//    }
+//
+//    public void setNumber(String number) {
+//        this.number = number;
+//    }
+//
+//    public float getPrice() {
+//        return price;
+//    }
+//
+//    public void setPrice(float price) {
+//        this.price = price;
+//    }
+//
+//    public String getAirline() {
+//        return airline;
+//    }
+//
+//    public void setAirline(String airline) {
+//        this.airline = airline;
+//    }
 }

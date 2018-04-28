@@ -1,7 +1,9 @@
-package structures;
+package entities;
 
+import lombok.Data;
 import utils.helpers.DataHelpers;
 
+@Data
 public class Location {
 
     private String street;
@@ -20,23 +22,6 @@ public class Location {
         this.state = newState;
         this.zipCode = newZipCode;
     }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public String getZipCode() {
-        return zipCode;
-    }
-
 
     public static class LocationBuilder {
 

@@ -3,9 +3,9 @@ package pages;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
-import structures.BankCard;
-import structures.Location;
-import structures.Person;
+import entities.BankCard;
+import entities.Location;
+import entities.Person;
 
 public class PurchasePage extends BasePage {
 

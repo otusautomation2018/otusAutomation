@@ -1,7 +1,9 @@
-package structures;
+package entities;
 
+import lombok.Data;
 import utils.helpers.DataHelpers;
 
+@Data
 public class Person {
 
     private String firstName;
@@ -11,13 +13,13 @@ public class Person {
         return this.firstName + " " + this.lastName;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
+//    public String getFirstName() {
+//        return firstName;
+//    }
+//
+//    public String getLastName() {
+//        return lastName;
+//    }
 
     public Person(final String newFirstName, final String newLastName) {
         this.firstName = newFirstName;

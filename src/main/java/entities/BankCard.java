@@ -1,10 +1,11 @@
-package structures;
+package entities;
 
+import lombok.Data;
 import utils.helpers.DataHelpers;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+@Data
 public class BankCard {
 
     private String typeOfCard;
@@ -27,25 +28,25 @@ public class BankCard {
         this.year = newYear;
     }
 
-    public String getTypeOfCard() {
-        return typeOfCard;
-    }
-
-    public String getCardNumber() {
-        return cardNumber;
-    }
-
-    public String getNameOnCard() {
-        return nameOnCard;
-    }
-
-    public String getMonth() {
-        return month;
-    }
-
-    public String getYear() {
-        return year;
-    }
+//    public String getTypeOfCard() {
+//        return typeOfCard;
+//    }
+//
+//    public String getCardNumber() {
+//        return cardNumber;
+//    }
+//
+//    public String getNameOnCard() {
+//        return nameOnCard;
+//    }
+//
+//    public String getMonth() {
+//        return month;
+//    }
+//
+//    public String getYear() {
+//        return year;
+//    }
 
     public static class BankCardBuilder {
         private String nestedTypeOfCard;
