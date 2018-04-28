@@ -70,4 +70,21 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>mac</id>
+            <activation>
+                <os>
+                    <family>MAC</family>
+                </os>
+            </activation>
+            <properties>
+                <webdriver.chrome.driver>/Library/Webdriver/chrome/chromedriver</webdriver.chrome.driver>
+                <webdriver.gecko.driver>/Library/Webdriver/gecko/geckodriver</webdriver.gecko.driver>
+                <webdriver.opera.driver>/Library/Webdriver/opera/operadriver</webdriver.opera.driver>
+                <webdriver.safari.driver>/usr/bin/safaridriver</webdriver.safari.driver>
+            </properties>
+        </profile>
+    </profiles>
+
 </project>

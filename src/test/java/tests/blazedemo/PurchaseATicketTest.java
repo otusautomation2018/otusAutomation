@@ -1,4 +1,4 @@
-package tests.lesson04;
+package tests.blazedemo;
 
 import org.testng.annotations.Test;
 import pages.ConfirmationPage;
