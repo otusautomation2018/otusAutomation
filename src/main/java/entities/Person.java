@@ -13,14 +13,6 @@ public class Person {
         return this.firstName + " " + this.lastName;
     }
 
-//    public String getFirstName() {
-//        return firstName;
-//    }
-//
-//    public String getLastName() {
-//        return lastName;
-//    }
-
     public Person(final String newFirstName, final String newLastName) {
         this.firstName = newFirstName;
         this.lastName = newLastName;

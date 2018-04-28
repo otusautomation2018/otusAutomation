@@ -1,9 +1,10 @@
-package pages;
+package pages.blazedemo;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import entities.Flight;
+import pages.BasePage;
 import utils.Driver;
 
 import java.util.ArrayList;
@@ -12,7 +13,6 @@ public class ReservePage extends BasePage {
 
     @FindBy(tagName = "h3")
     public WebElement title;
-
 
     private ArrayList<WebElement> flightsList = new ArrayList<>(Driver.
         getInstance().
@@ -51,25 +51,25 @@ public class ReservePage extends BasePage {
 
     public WebElement findElementWithMinimumPrice(){
         float min = 0;
-        WebElement res = null;
+        WebElement flightWithMinimumPrice = null;
 
         for(int i = 0; i < flightsList.size(); i++) {
             WebElement currentElem = flightsList.get(i);
-            float currentPrice = flightPriceFloat(currentElem);
+            float currentPrice = flightPriceByElem(currentElem);
 
             if(i == 0) {
                 min = currentPrice;
-                res = currentElem;
+                flightWithMinimumPrice = currentElem;
             } else if (min > currentPrice) {
                 min = currentPrice;
-                res = currentElem;
+                flightWithMinimumPrice = currentElem;
             }
         }
-        return res;
+        return flightWithMinimumPrice;
     }
 
-    private Float flightPriceFloat(WebElement flightElement) {
-        flightPrice = flightElement.findElement(By.cssSelector("input[name=price]"));
+    private Float flightPriceByElem(WebElement flightElement) {
+        WebElement flightPrice = flightElement.findElement(By.cssSelector("input[name=price]"));
         return Float.parseFloat(flightPrice.getAttribute("value"));
     }
 }

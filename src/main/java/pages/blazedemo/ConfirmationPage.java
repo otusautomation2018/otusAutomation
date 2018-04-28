@@ -1,7 +1,8 @@
-package pages;
+package pages.blazedemo;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import pages.BasePage;
 
 public class ConfirmationPage extends BasePage {
 

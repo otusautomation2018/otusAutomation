@@ -29,28 +29,4 @@ public class Flight {
         }
         return this.destinationCity;
     }
-
-//    public String getNumber() {
-//        return number;
-//    }
-//
-//    public void setNumber(String number) {
-//        this.number = number;
-//    }
-//
-//    public float getPrice() {
-//        return price;
-//    }
-//
-//    public void setPrice(float price) {
-//        this.price = price;
-//    }
-//
-//    public String getAirline() {
-//        return airline;
-//    }
-//
-//    public void setAirline(String airline) {
-//        this.airline = airline;
-//    }
 }

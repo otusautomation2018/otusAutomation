@@ -28,26 +28,6 @@ public class BankCard {
         this.year = newYear;
     }
 
-//    public String getTypeOfCard() {
-//        return typeOfCard;
-//    }
-//
-//    public String getCardNumber() {
-//        return cardNumber;
-//    }
-//
-//    public String getNameOnCard() {
-//        return nameOnCard;
-//    }
-//
-//    public String getMonth() {
-//        return month;
-//    }
-//
-//    public String getYear() {
-//        return year;
-//    }
-
     public static class BankCardBuilder {
         private String nestedTypeOfCard;
         private String nestedCardNumber;

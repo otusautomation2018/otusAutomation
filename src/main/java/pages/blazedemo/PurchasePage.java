@@ -1,4 +1,4 @@
-package pages;
+package pages.blazedemo;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -6,6 +6,7 @@ import org.openqa.selenium.support.ui.Select;
 import entities.BankCard;
 import entities.Location;
 import entities.Person;
+import pages.BasePage;
 
 public class PurchasePage extends BasePage {
 
@@ -120,5 +121,4 @@ public class PurchasePage extends BasePage {
     public String expectedTextOnTitle(String departureCity, String destinationCity) {
         return "Your flight from " + departureCity + " to " + destinationCity + " has been reserved.";
     }
-
 }

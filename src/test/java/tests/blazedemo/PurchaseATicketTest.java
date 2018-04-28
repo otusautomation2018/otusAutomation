@@ -1,10 +1,10 @@
 package tests.blazedemo;
 
 import org.testng.annotations.Test;
-import pages.ConfirmationPage;
-import pages.MainPage;
-import pages.PurchasePage;
-import pages.ReservePage;
+import pages.blazedemo.ConfirmationPage;
+import pages.blazedemo.MainPage;
+import pages.blazedemo.PurchasePage;
+import pages.blazedemo.ReservePage;
 import entities.BankCard;
 import entities.Flight;
 import entities.Location;
@@ -12,8 +12,6 @@ import entities.Person;
 import tests.BaseTest;
 import utils.PropertyReader;
 import utils.helpers.WaitingsHelpers;
-
-
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -22,13 +20,13 @@ public class PurchaseATicketTest extends BaseTest {
     private String baseUrl = PropertyReader.
             getPropertyFromFile("properties/settings.properties", "baseUrlBlaseDemo");
 
+    private Person user = new Person.PersonBuilder().createPerson();
+    private Location address = new Location.LocationBuilder().createLocation();
+    private BankCard bankCard = new BankCard.BankCardBuilder(user.fullName()).createBankCard();
+    private Flight flight = new Flight();
+
     @Test
     public void test() {
-
-        Person user = new Person.PersonBuilder().createPerson();
-        Location address = new Location.LocationBuilder().createLocation();
-        BankCard bankCard = new BankCard.BankCardBuilder(user.fullName()).createBankCard();
-        Flight flight = new Flight();
 
         driver.get(baseUrl);
 
@@ -60,20 +58,7 @@ public class PurchaseATicketTest extends BaseTest {
         assertEquals(purchasePage.flightNumber.getText(), "Flight Number: " + flight.getNumber());
         assertEquals(purchasePage.airlineCompany.getText(), "Airline: " + flight.getAirline());
 
-        float priceCostValue = Float.parseFloat(purchasePage.priceCost.getText().
-                replace("Price: ", ""));
-        float arbitraryFeesAndTaxes = Float.parseFloat(purchasePage.arbitraryFeesAndTaxes.getText().
-                replace("Arbitrary Fees and Taxes: ",""));
-
-        float totalCostResult =
-                priceCostValue + arbitraryFeesAndTaxes;
-        float totalCostValue = Float.parseFloat(purchasePage.totalCost.getText().
-                        replace("Total Cost: ",""));
-
-//        цена на странице Purchase равна той, что мы выбрали на странице Reserve
-        assertEquals(priceCostValue, flight.getPrice());
-//        отображаемая итоговая цена является суммой цены и сборов
-        assertEquals(totalCostValue, totalCostResult);
+        compareCosts(purchasePage);
 
         purchasePage.fillPayForm(user, address, bankCard);
         ConfirmationPage confirmationPage = purchasePage.submitForm();
@@ -105,5 +90,22 @@ public class PurchaseATicketTest extends BaseTest {
         assertEquals(confirmationPage.orderExpiration.getText(), bankCard.getMonth() + " /" + bankCard.getYear());
 
         assertTrue(confirmationPage.orderAuthCode.isDisplayed());
+    }
+
+    public void compareCosts(PurchasePage purchasePage) {
+        float priceCostValue = Float.parseFloat(purchasePage.priceCost.getText().
+                replace("Price: ", ""));
+        float arbitraryFeesAndTaxes = Float.parseFloat(purchasePage.arbitraryFeesAndTaxes.getText().
+                replace("Arbitrary Fees and Taxes: ",""));
+
+        float totalCostResult =
+                priceCostValue + arbitraryFeesAndTaxes;
+        float totalCostValue = Float.parseFloat(purchasePage.totalCost.getText().
+                replace("Total Cost: ",""));
+
+//        цена на странице Purchase равна той, что мы выбрали на странице Reserve
+        assertEquals(priceCostValue, flight.getPrice());
+//        отображаемая итоговая цена является суммой цены и сборов
+        assertEquals(totalCostValue, totalCostResult);
     }
 }
