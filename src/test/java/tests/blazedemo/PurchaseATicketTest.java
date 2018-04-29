@@ -24,6 +24,7 @@ public class PurchaseATicketTest extends BaseTest {
     private Location address = new Location.LocationBuilder().createLocation();
     private BankCard bankCard = new BankCard.BankCardBuilder(user.fullName()).createBankCard();
     private Flight flight = new Flight();
+    private final String currency = "USD";
 
     @Test
     public void test() {
@@ -72,19 +73,9 @@ public class PurchaseATicketTest extends BaseTest {
         assertTrue(confirmationPage.orderStatus.isDisplayed());
 
         assertTrue(confirmationPage.orderAmount.isDisplayed());
-        assertEquals(confirmationPage.orderAmount.getText(), "USD");
+        assertEquals(confirmationPage.orderAmount.getText(), currency);
 
-//        проверяем соответствие последних 4 знаков
-        assertEquals(confirmationPage.
-                        orderCardNumber.
-                        getText().
-                        substring(confirmationPage.
-                                orderCardNumber.
-                                getText().
-                                length()-4),
-                     bankCard.
-                             getCardNumber().
-                             substring(bankCard.getCardNumber().length()-4));
+        compareLast4SymbolsOfBankCard(confirmationPage);
 
         assertTrue(confirmationPage.orderExpiration.isDisplayed());
         assertEquals(confirmationPage.orderExpiration.getText(), bankCard.getMonth() + " /" + bankCard.getYear());
@@ -93,19 +84,31 @@ public class PurchaseATicketTest extends BaseTest {
     }
 
     public void compareCosts(PurchasePage purchasePage) {
-        float priceCostValue = Float.parseFloat(purchasePage.priceCost.getText().
-                replace("Price: ", ""));
-        float arbitraryFeesAndTaxes = Float.parseFloat(purchasePage.arbitraryFeesAndTaxes.getText().
-                replace("Arbitrary Fees and Taxes: ",""));
+        String priceCost = purchasePage.priceCost.getText().
+                replace("Price: ", "");
+        String feesAndTaxes = purchasePage.arbitraryFeesAndTaxes.getText().
+                replace("Arbitrary Fees and Taxes: ","");
+        String totalCost = purchasePage.totalCost.getText().
+                replace("Total Cost: ","");
 
-        float totalCostResult =
-                priceCostValue + arbitraryFeesAndTaxes;
-        float totalCostValue = Float.parseFloat(purchasePage.totalCost.getText().
-                replace("Total Cost: ",""));
+        float priceCostValue = Float.parseFloat(priceCost);
+        float arbitraryFeesAndTaxesValue = Float.parseFloat(feesAndTaxes);
+        float totalCostValue = Float.parseFloat(totalCost);
+
+        float totalCostResult = priceCostValue + arbitraryFeesAndTaxesValue;
 
 //        цена на странице Purchase равна той, что мы выбрали на странице Reserve
         assertEquals(priceCostValue, flight.getPrice());
 //        отображаемая итоговая цена является суммой цены и сборов
         assertEquals(totalCostValue, totalCostResult);
+    }
+
+    //        проверяем соответствие последних 4 знаков
+    public void compareLast4SymbolsOfBankCard(ConfirmationPage confirmationPage){
+        String cardNumberOnPage = confirmationPage.orderCardNumber.getText();
+        String actualCardNumbers = cardNumberOnPage.substring(cardNumberOnPage.length()-4);
+        String expectedCardNumbers = bankCard.getCardNumber().substring(bankCard.getCardNumber().length()-4);
+
+        assertEquals(actualCardNumbers, expectedCardNumbers);
     }
 }

@@ -10,6 +10,16 @@ public class DataHelpers {
         return array[random(0, array.length-1)];
     }
 
+    public static float discardUpTo2DecimalPlaces(float fl) {
+        String[] splitedStr = String.valueOf(fl).split("\\.");
+        String wholePart = splitedStr[0];
+        String fractionPart = splitedStr[1].substring(0, 2);
+        String resultStr = wholePart + "." + fractionPart;
+        float result = Float.parseFloat(resultStr);
+
+        return result;
+    }
+
     public static String generateZipCode() {
         StringBuffer buf = new StringBuffer();
         for(int i=0; i<6;i++){

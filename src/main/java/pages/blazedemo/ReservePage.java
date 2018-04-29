@@ -6,6 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import entities.Flight;
 import pages.BasePage;
 import utils.Driver;
+import utils.helpers.DataHelpers;
 
 import java.util.ArrayList;
 
@@ -36,7 +37,8 @@ public class ReservePage extends BasePage {
 
     public void fillInTheFlightInformation(Flight flight) {
         flight.setNumber(flightNumber.getAttribute("value"));
-        flight.setPrice(Float.parseFloat(flightPrice.getAttribute("value")));
+        float price = Float.parseFloat(flightPrice.getAttribute("value"));
+        flight.setPrice(DataHelpers.discardUpTo2DecimalPlaces(price));
         flight.setAirline(flightAirline.getAttribute("value"));
     }
 
