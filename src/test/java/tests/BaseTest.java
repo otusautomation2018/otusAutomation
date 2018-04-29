@@ -6,23 +6,23 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import utils.Driver;
 import utils.PropertyReader;
+import utils.helpers.WaitingsHelpers;
 
 import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
 
-    public String baseUrl = PropertyReader.
-            getPropertyFromFile("properties/settings.properties", "baseUrl");
     public int baseTimeout = Integer.parseInt(PropertyReader.
             getPropertyFromFile("properties/settings.properties", "timeout"));
+
     protected WebDriver driver;
     protected WebDriverWait webDriverWait;
 
     @BeforeClass
     public void beforeClass(){
-        driver = new Driver().getDriver();
+        driver = Driver.getInstance();
         driver.manage().timeouts().implicitlyWait(baseTimeout, TimeUnit.SECONDS);
-        webDriverWait = new WebDriverWait(driver, baseTimeout);
+        webDriverWait = WaitingsHelpers.getInstanceWebDriverWait();
     }
 
     @AfterClass

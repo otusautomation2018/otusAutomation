@@ -1,14 +1,16 @@
-package structures;
+package entities;
 
+import lombok.Data;
 import utils.helpers.DataHelpers;
 
+@Data
 public class Flight {
 
-    public float price;
-    public String number;
-    public String airline;
-    public String departureCity;
-    public String destinationCity;
+    private float price;
+    private String number;
+    private String airline;
+    private String departureCity;
+    private String destinationCity;
 
     public String departureCity() {
         String[] departureCities = {
@@ -26,29 +28,5 @@ public class Flight {
             this.destinationCity =  DataHelpers.getRandomArrayItem(destinationCities);
         }
         return this.destinationCity;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
-    public String getAirline() {
-        return airline;
-    }
-
-    public void setAirline(String airline) {
-        this.airline = airline;
     }
 }

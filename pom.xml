@@ -8,27 +8,45 @@
     <artifactId>otusAutomation</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <browser></browser>
+        <suite></suite>
+    </properties>
+
+
     <dependencies>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>3.11.0</version>
         </dependency>
+
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>RELEASE</version>
         </dependency>
+
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>RELEASE</version>
         </dependency>
+
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
             <version>2.2.1</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.20</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -39,22 +57,46 @@
                 <version>2.21.0</version>
                 <configuration>
                     <systemPropertyVariables>
+                        <browser>${browser}</browser>
                         <webdriver.chrome.driver>/Library/Webdriver/chrome/chromedriver</webdriver.chrome.driver>
                         <webdriver.gecko.driver>/Library/Webdriver/gecko/geckodriver</webdriver.gecko.driver>
                         <webdriver.opera.driver>/Library/Webdriver/opera/operadriver</webdriver.opera.driver>
                         <webdriver.safari.driver>/usr/bin/safaridriver</webdriver.safari.driver>
+
+                        <suite>${suite}</suite>
                     </systemPropertyVariables>
+
+                    <suiteXmlFiles>
+                        <suiteXmlFile>${project.basedir}/src/test/resources/${suite}.xml</suiteXmlFile>
+                    </suiteXmlFiles>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>mac</id>
+            <activation>
+                <os>
+                    <family>MAC</family>
+                </os>
+            </activation>
+            <properties>
+                <webdriver.chrome.driver>/Library/Webdriver/chrome/chromedriver</webdriver.chrome.driver>
+                <webdriver.gecko.driver>/Library/Webdriver/gecko/geckodriver</webdriver.gecko.driver>
+                <webdriver.opera.driver>/Library/Webdriver/opera/operadriver</webdriver.opera.driver>
+                <webdriver.safari.driver>/usr/bin/safaridriver</webdriver.safari.driver>
+            </properties>
+        </profile>
+    </profiles>
 
 </project>

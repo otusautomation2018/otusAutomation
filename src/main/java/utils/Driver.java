@@ -10,6 +10,7 @@ import org.openqa.selenium.safari.SafariDriver;
 public class Driver {
 
     public static String driverName;
+    private static WebDriver driver;
 
     public WebDriver createFireFoxDriver() {
         WebDriverManager.firefoxdriver().setup();
@@ -30,8 +31,14 @@ public class Driver {
         return new SafariDriver();
     }
 
-    public WebDriver getDriver() {
-        driverName = PropertyReader.getPropertyFromFile("properties/settings.properties", "webDriver");
+    private WebDriver getDriver() {
+        driverName = System.getProperty("browser");
+        if(driverName == null) {
+        driverName = PropertyReader.
+                getPropertyFromFile(
+                        "properties/settings.properties",
+                        "browser");
+        }
         if (driverName == null) driverName = "chrome";
         switch (driverName){
             case "chrome": return createChromeDriver();
@@ -40,5 +47,12 @@ public class Driver {
             case "safari": return createSafariDriver();
             default: return createChromeDriver();
         }
+    }
+
+    public static WebDriver getInstance() {
+        if (driver == null) {
+            driver = new Driver().getDriver();
+        }
+        return driver;
     }
 }
