@@ -18,7 +18,7 @@ import static org.testng.Assert.assertTrue;
 public class PurchaseATicketTest extends BaseTest {
 
     private String baseUrl = PropertyReader.
-            getPropertyFromFile("properties/settings.properties", "baseUrlBlaseDemo");
+            getPropertyFromFile("properties/blazedemo.properties", "baseUrl");
 
     private Person user = new Person.PersonBuilder().createPerson();
     private Location address = new Location.LocationBuilder().createLocation();
