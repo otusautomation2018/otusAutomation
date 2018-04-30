@@ -3,6 +3,7 @@ package utils;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.safari.SafariDriver;
@@ -11,6 +12,7 @@ public class Driver {
 
     public static String driverName;
     private static WebDriver driver;
+    private static final boolean DISPLAY = Boolean.valueOf(System.getProperty("display"));
 
     public WebDriver createFireFoxDriver() {
         WebDriverManager.firefoxdriver().setup();
@@ -24,7 +26,13 @@ public class Driver {
 
     public WebDriver createChromeDriver() {
         WebDriverManager.chromedriver().setup();
-        return new ChromeDriver();
+        if(DISPLAY) {
+            return new ChromeDriver();
+        } else {
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless");
+            return new ChromeDriver(options);
+        }
     }
 
     public WebDriver createSafariDriver() {

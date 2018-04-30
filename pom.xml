@@ -11,6 +11,7 @@
     <properties>
         <browser></browser>
         <suite></suite>
+        <display></display>
     </properties>
 
 
@@ -64,6 +65,7 @@
                         <webdriver.safari.driver>/usr/bin/safaridriver</webdriver.safari.driver>
 
                         <suite>${suite}</suite>
+                        <display>${display}</display>
                     </systemPropertyVariables>
 
                     <suiteXmlFiles>
