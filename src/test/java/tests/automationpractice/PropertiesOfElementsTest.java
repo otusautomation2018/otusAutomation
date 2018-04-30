@@ -19,10 +19,10 @@ public class PropertiesOfElementsTest extends BaseTest {
             .getPropertyFromFile("properties/automationpractice.properties", "baseUrl");
 
     private MainPage mainPage = new MainPage();
+    private static final String colorPattern = "rgba?\\(51, 51, 51(, 1)?\\)";
 
     @Test
     public void test() {
-        String colorPattern = "rgba?\\(51, 51, 51(, 1)?\\)";
 
         driver.get(baseUrl);
 
@@ -32,10 +32,13 @@ public class PropertiesOfElementsTest extends BaseTest {
 
         Dimension beforeFocusSizeFirstCategory = mainPage.topMenuBlock.firstCategory.getSize();
 
-        ActionsHelpers.focusOnElement(mainPage.topMenuBlock.firstCategory);
+        ActionsHelpers.focusOnElement(mainPage.topMenuBlock.firstCategory, mainPage.topMenuBlock.subMenu);
 
         Dimension afterFocusSizeFirstCategory = mainPage.topMenuBlock.firstCategory.getSize();
-        String afterFocusBackgroundColorFirstCategory = mainPage.topMenuBlock.firstCategory.getCssValue("background-color");
+        String afterFocusBackgroundColorFirstCategory = mainPage
+                .topMenuBlock
+                .firstCategory
+                .getCssValue("background-color");
 
         assertEquals(beforeFocusSizeFirstCategory, afterFocusSizeFirstCategory);
         assertTrue(afterFocusBackgroundColorFirstCategory.matches(colorPattern));
