@@ -4,6 +4,7 @@
     <test name="tests.automationpractice.PropertiesOfElementsTest">
         <classes>
             <class name="tests.automationpractice.PropertiesOfElementsTest"/>
+            <class name="tests.automationpractice.ExpectedConditionsTest"/>
         </classes>
     </test>
 </suite>
