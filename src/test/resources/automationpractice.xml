@@ -1,9 +1,14 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 
 <suite name="automationpractice" verbose="1">
-    <test name="tests.automationpractice.PropertiesOfElementsTest">
+    <test name="PropertiesOfElementsTest">
         <classes>
             <class name="tests.automationpractice.PropertiesOfElementsTest"/>
+        </classes>
+    </test>
+    <test name="ExpectedConditionsTest">
+        <classes>
+            <class name="tests.automationpractice.ExpectedConditionsTest"/>
         </classes>
     </test>
 </suite>

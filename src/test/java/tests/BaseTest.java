@@ -2,8 +2,7 @@ package tests;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.*;
 import utils.Driver;
 import utils.PropertyReader;
 import utils.helpers.WaitingsHelpers;
@@ -18,14 +17,14 @@ public class BaseTest {
     protected WebDriver driver;
     protected WebDriverWait webDriverWait;
 
-    @BeforeClass
+    @BeforeTest
     public void beforeClass(){
         driver = Driver.getInstance();
         driver.manage().timeouts().implicitlyWait(baseTimeout, TimeUnit.SECONDS);
         webDriverWait = WaitingsHelpers.getInstanceWebDriverWait();
     }
 
-    @AfterClass
+    @AfterSuite
     public void afterClass() {
         driver.quit();
     }

@@ -3,6 +3,7 @@ package utils;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.safari.SafariDriver;
@@ -11,33 +12,44 @@ public class Driver {
 
     public static String driverName;
     private static WebDriver driver;
+    private static final boolean DISPLAY = Boolean.valueOf(System.getProperty("display"));
 
-    public WebDriver createFireFoxDriver() {
+    public static WebDriver createFireFoxDriver() {
         WebDriverManager.firefoxdriver().setup();
-        return new FirefoxDriver();
+        driver = new FirefoxDriver();
+        return driver;
     }
 
-    public WebDriver createOperaDriver() {
+    public static WebDriver createOperaDriver() {
         WebDriverManager.operadriver().setup();
-        return new OperaDriver();
+        driver = new OperaDriver();
+        return driver;
     }
 
-    public WebDriver createChromeDriver() {
+    public static WebDriver createChromeDriver() {
         WebDriverManager.chromedriver().setup();
-        return new ChromeDriver();
+        if(DISPLAY) {
+            driver = new ChromeDriver();
+            return driver;
+        } else {
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless");
+            driver = new ChromeDriver(options);
+            return driver;
+        }
     }
 
-    public WebDriver createSafariDriver() {
+    public static WebDriver createSafariDriver() {
         return new SafariDriver();
     }
 
-    private WebDriver getDriver() {
+    private static WebDriver getDriver() {
         driverName = System.getProperty("browser");
         if(driverName == null) {
-        driverName = PropertyReader.
-                getPropertyFromFile(
-                        "properties/settings.properties",
-                        "browser");
+            driverName = PropertyReader.
+                    getPropertyFromFile(
+                            "properties/settings.properties",
+                            "browser");
         }
         if (driverName == null) driverName = "chrome";
         switch (driverName){
@@ -51,7 +63,7 @@ public class Driver {
 
     public static WebDriver getInstance() {
         if (driver == null) {
-            driver = new Driver().getDriver();
+            driver = Driver.getDriver();
         }
         return driver;
     }

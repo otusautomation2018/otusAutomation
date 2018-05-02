@@ -1,3 +1,5 @@
+### README
+
 Run all tests:
 ```bash
 mvn test
@@ -31,4 +33,29 @@ mvn -Dtest=PurchaseATicketTest -Dbrowser=opera test
 Run suite on file `blazedemo.xml`
 ```bash
 mvn test -Dsuite=blazedemo
+```
+
+### Headless mode
+
+To run in headless mode, the system property `display` must be `false`, the `browser` must be `chrome`.
+
+To start in normal mode, the system property `display` should be true, the `browser` should be `chrome`, 
+or you need to use a different browser.
+
+Example:
+
+Run in headless mode on the browser `chrome`:
+
+```bash
+mvn test -Dtest=PurchaseATicketTest
+```
+
+Run in normal mode on the browser `chrome`:
+```bash
+mvn test -Dtest=PurchaseATicketTest -Ddispaly=true
+```
+
+Run in normal mode on the browser `opera`:
+```bash
+mvn test -Dtest=PurchaseATicketTest -Dbrowser=opera
 ```

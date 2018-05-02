@@ -1,46 +1,38 @@
 package tests.automationpractice;
 
-
-import org.openqa.selenium.Dimension;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Test;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
-
 import pages.automationpractice.MainPage;
 import tests.BaseTest;
 import utils.PropertyReader;
 import utils.helpers.ActionsHelpers;
 import utils.helpers.WaitingsHelpers;
 
-public class PropertiesOfElementsTest extends BaseTest {
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
+public class ExpectedConditionsTest extends BaseTest {
 
     private String baseUrl = PropertyReader
             .getPropertyFromFile("properties/automationpractice.properties", "baseUrl");
 
+    private final String tShirtsPageTitle = "T-shirts - My Store";
+
     private MainPage mainPage = new MainPage();
-    private static final String colorPattern = "rgba?\\(51, 51, 51(, 1)?\\)";
 
     @Test
     public void test() {
-
         driver.get(baseUrl);
-
         WaitingsHelpers.waitForLoadPageByTextOnPage(mainPage.h1OfexpectedText, mainPage.expectedTextOnPage());
+
         assertEquals(driver.getCurrentUrl(), baseUrl + mainPage.getUrl());
         assertTrue(mainPage.isInitialized());
 
-        Dimension beforeFocusSizeFirstCategory = mainPage.topMenuBlock.firstCategory.getSize();
-
         ActionsHelpers.focusOnElement(mainPage.topMenuBlock.firstCategory, mainPage.topMenuBlock.subMenu);
 
-        Dimension afterFocusSizeFirstCategory = mainPage.topMenuBlock.firstCategory.getSize();
-        String afterFocusBackgroundColorFirstCategory = mainPage
-                .topMenuBlock
-                .firstCategory
-                .getCssValue("background-color");
+        mainPage.topMenuBlock.tShirtsBtn.click();
+        webDriverWait.until(ExpectedConditions.titleIs(tShirtsPageTitle));
 
-        assertEquals(beforeFocusSizeFirstCategory, afterFocusSizeFirstCategory);
-        assertTrue(afterFocusBackgroundColorFirstCategory.matches(colorPattern));
+        assertEquals(driver.getTitle(), tShirtsPageTitle);
     }
 }
