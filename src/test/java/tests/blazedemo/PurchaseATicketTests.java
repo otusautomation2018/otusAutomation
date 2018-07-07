@@ -15,7 +15,7 @@ import utils.helpers.WaitingsHelpers;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
-public class PurchaseATicketTest extends BaseTest {
+public class PurchaseATicketTests extends BaseTest {
 
     private String baseUrl = PropertyReader.
             getPropertyFromFile("properties/blazedemo.properties", "baseUrl");
@@ -27,7 +27,7 @@ public class PurchaseATicketTest extends BaseTest {
     private final String currency = "USD";
 
     @Test
-    public void test() {
+    public void purchaseATicketTest() {
 
         driver.get(baseUrl);
 
