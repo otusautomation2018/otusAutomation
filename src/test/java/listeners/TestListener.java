@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import utils.ScreenShoter;
 
 import java.util.Date;
 
@@ -18,13 +19,12 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
-
     }
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
         logger.error(iTestResult.getName(), iTestResult.getThrowable());
-//        ScreenShoter.takeAScreenshot(getFileName(iTestResult));
+        ScreenShoter.makeAScreenshot(getFileName(iTestResult));
     }
 
     @Override
