@@ -11,7 +11,7 @@
     <properties>
         <browser></browser>
         <suite></suite>
-        <display></display>
+        <display>true</display>
     </properties>
 
 
@@ -38,6 +38,12 @@
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
             <version>2.2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>LATEST</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
