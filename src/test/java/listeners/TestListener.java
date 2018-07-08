@@ -1,9 +1,12 @@
 package listeners;
 
+import loggers.PerformanceLogger;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.logging.LogEntry;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
+import utils.Driver;
 import utils.ScreenShoter;
 
 import java.util.Date;
@@ -19,12 +22,15 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
+//        PerformanceLogger.writeLogToFile(getFileName(iTestResult));
     }
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
         logger.error(iTestResult.getName(), iTestResult.getThrowable());
         ScreenShoter.makeAScreenshot(getFileName(iTestResult));
+        PerformanceLogger.setLogForChrome();
+        PerformanceLogger.writeLogToFile(getFileName(iTestResult));
     }
 
     @Override
@@ -50,5 +56,7 @@ public class TestListener implements ITestListener {
     private String getFileName(ITestResult iTestResult){
         long mills = new Date(iTestResult.getEndMillis()).getTime();
         return iTestResult.getName() + mills;
-        }
+    }
+
+
 }
