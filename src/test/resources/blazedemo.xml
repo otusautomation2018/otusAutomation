@@ -3,7 +3,7 @@
 <suite name="blazedemo" verbose="1">
     <test name="tests.blazedemo.Lesson05Test">
         <classes>
-            <class name="tests.blazedemo.PurchaseATicketTest"/>
+            <class name="tests.blazedemo.PurchaseATicketTests"/>
         </classes>
     </test>
 </suite>
