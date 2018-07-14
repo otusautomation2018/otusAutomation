@@ -1,5 +1,6 @@
 package pages.blazedemo;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pages.BasePage;
@@ -29,12 +30,15 @@ public class ConfirmationPage extends BasePage {
 
     private String url = "/confirmation.php";
 
+    @Step
     public boolean isInitialized() { return title.isDisplayed(); }
 
+    @Step
     public String getUrl() {
         return url;
     }
 
+    @Step
     public String expectedTextOnTitle() {
         return "Thank you for your purchase today!";
     }

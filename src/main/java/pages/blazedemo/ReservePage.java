@@ -1,5 +1,6 @@
 package pages.blazedemo;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -29,12 +30,15 @@ public class ReservePage extends BasePage {
 
     public ReservePage() { super(); }
 
+    @Step
     public boolean isInitialized() { return title.isDisplayed(); }
 
+    @Step
     public String getUrl() {
         return url;
     }
 
+    @Step
     public void fillInTheFlightInformation(Flight flight) {
         flight.setNumber(flightNumber.getAttribute("value"));
         float price = Float.parseFloat(flightPrice.getAttribute("value"));
@@ -42,15 +46,18 @@ public class ReservePage extends BasePage {
         flight.setAirline(flightAirline.getAttribute("value"));
     }
 
+    @Step
     public PurchasePage choiseFlight() {
         this.choiseFlight.click();
         return new PurchasePage();
     }
 
+    @Step
     public String expectedTextOnTitle(String departureCity, String destinationCity) {
         return "Flights from " + departureCity + " to " + destinationCity + ":";
     }
 
+    @Step
     public WebElement findElementWithMinimumPrice(){
         float min = 0;
         WebElement flightWithMinimumPrice = null;
@@ -70,6 +77,7 @@ public class ReservePage extends BasePage {
         return flightWithMinimumPrice;
     }
 
+    @Step
     private Float flightPriceByElem(WebElement flightElement) {
         WebElement flightPrice = flightElement.findElement(By.cssSelector("input[name=price]"));
         return Float.parseFloat(flightPrice.getAttribute("value"));

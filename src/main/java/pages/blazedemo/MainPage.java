@@ -1,5 +1,6 @@
 package pages.blazedemo;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
@@ -20,13 +21,16 @@ public class MainPage extends BasePage {
 
     public MainPage() { super(); }
 
+    @Step
     public boolean isInitialized() { return selectElementDepartureCity.isDisplayed(); }
 
+    @Step
     public void fillChoiseCitiesForm(String valueDepartureCity, String valueDestinationCity) {
         this.selectDepartureCity.selectByValue(valueDepartureCity);
         this.selectDestinationCity.selectByValue(valueDestinationCity);
     }
 
+    @Step
     public ReservePage submitForm() {
         this.submitFormButton.click();
         return new ReservePage();
