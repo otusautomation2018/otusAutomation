@@ -1,5 +1,6 @@
 package tests.blazedemo;
 
+import io.qameta.allure.Step;
 import org.testng.annotations.Test;
 import pages.blazedemo.ConfirmationPage;
 import pages.blazedemo.MainPage;
@@ -83,6 +84,7 @@ public class PurchaseATicketTests extends BaseTest {
         assertTrue(confirmationPage.orderAuthCode.isDisplayed());
     }
 
+    @Step
     public void compareCosts(PurchasePage purchasePage) {
         String priceCost = purchasePage.priceCost.getText().
                 replace("Price: ", "");
@@ -104,6 +106,7 @@ public class PurchaseATicketTests extends BaseTest {
     }
 
     //        проверяем соответствие последних 4 знаков
+    @Step
     public void compareLast4SymbolsOfBankCard(ConfirmationPage confirmationPage){
         String cardNumberOnPage = confirmationPage.orderCardNumber.getText();
         String actualCardNumbers = cardNumberOnPage.substring(cardNumberOnPage.length()-4);

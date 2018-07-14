@@ -1,5 +1,6 @@
 package pages.blazedemo;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
@@ -66,17 +67,21 @@ public class PurchasePage extends BasePage {
 
     public PurchasePage() { super(); }
 
+    @Step
     public String getUrl() {
         return url;
     }
 
+    @Step
     public boolean isInitialized() { return title.isDisplayed(); }
 
+    @Step
     public void fillUserDataInForm(Person user) {
         this.nameInput.clear();
         this.nameInput.sendKeys(user.fullName());
     }
 
+    @Step
     public void fillLocationDataInForm(Location location) {
         this.addressInput.clear();
         this.addressInput.sendKeys(location.getStreet());
@@ -91,6 +96,7 @@ public class PurchasePage extends BasePage {
         this.zipCodeInput.sendKeys(location.getZipCode());
     }
 
+    @Step
     public void fillCreditCardDataInForm(BankCard creditCard) {
         this.cardType.selectByValue(creditCard.getTypeOfCard());
 
@@ -107,17 +113,20 @@ public class PurchasePage extends BasePage {
         this.nameOnCardInput.sendKeys(creditCard.getNameOnCard());
     }
 
+    @Step
     public void fillPayForm(Person user, Location location, BankCard creditCard) {
         fillUserDataInForm(user);
         fillLocationDataInForm(location);
         fillCreditCardDataInForm(creditCard);
     }
 
+    @Step
     public ConfirmationPage submitForm() {
         this.submitFormButton.click();
         return new ConfirmationPage();
     }
 
+    @Step
     public String expectedTextOnTitle(String departureCity, String destinationCity) {
         return "Your flight from " + departureCity + " to " + destinationCity + " has been reserved.";
     }
